@@ -1,8 +1,8 @@
 import requests
 from plotly.graph_objs import Bar
 from plotly import offline
-import re
-# Make an API call
+
+# Make an API call to GitHub
 url = 'https://api.github.com/search/repositories?q=language:python&sort=stars'
 headers = {'Accept': 'application/vnd.github.v3+json'}
 r = requests.get(url, headers=headers)
@@ -11,20 +11,10 @@ print(f"Status code: {r.status_code}")
 # Store the API response
 response_dict = r.json()
 
-# Process results:
-print(response_dict.keys()) # ['total _count', 'incomplete_results', 'items']
-# Print the total number of Python repositories in GitHub
-print(f"Total Repositories: {response_dict['total_count']}")
+# Process results
 # The value associated with 'items' is a list containing a number of dictionaries, one for each repository returned. Let's store this list in repo_dicts
 repo_dicts = response_dict['items']
-# Print the length of repo_dicts to find the number of dictionaries, and therefore repositories, we have information for
-print(f"Repositories returned: {len(repo_dicts)}")
-# Lets store the first dictionary in repo_dict
-# repo_dict = repo_dicts[0]
-# Lets print all the information we have in this dictionary
-# print(f"\nKeys: {len(repo_dict)}")
-# for key in sorted(repo_dict.keys()):
-#     print(f"\t{key}")
+
 
 repo_links, stars, tooltips = [], [], []
 for repo_dict in repo_dicts:
